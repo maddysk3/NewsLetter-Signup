@@ -1,13 +1,14 @@
+require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
-require('dotenv').config()
-
-
 const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+const mailChimpApi = process.env.MAILCHIMPAPIKEY;
+console.log(mailChimpApi);
+
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/signup.html")
 })
@@ -35,7 +36,8 @@ app.post("/", function (req, res) {
     // Mailchimp API code
     const url = "https://us8.api.mailchimp.com/3.0/lists/57ad2f2c73";
 
-    const mailChimpApi = process.env.MAILCHIMP_APIKEY;
+    const mailChimpApi = process.env.MAILCHIMPAPIKEY;
+
     const options = {
         method: "POST",
         auth: mailChimpApi
